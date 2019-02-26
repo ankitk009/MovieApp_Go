@@ -1,6 +1,6 @@
 package main
 
-import "movies/cmd"
+import "MovieApp_Go/movie/cmd"
 
 func main() {
 	cmd.Execute()

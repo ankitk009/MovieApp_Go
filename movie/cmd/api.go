@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"commonfunc"
+	"MovieApp_Go/commonfunc"
 	"encoding/json"
 	"net/http"
 
