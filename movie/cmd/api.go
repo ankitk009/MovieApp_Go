@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"MovieApp_Go/commonfunc"
+	"MovieApp_Go/common"
 	"encoding/json"
 	"net/http"
 
@@ -32,37 +32,37 @@ var apiCmd = &cobra.Command{
 
 func searchMovies(c *gin.Context) {
 	titlename := c.Param("title")
-	baseurl := commonfunc.GenerateBaseURL()
+	baseurl := common.GenerateBaseURL()
 	v := baseurl.Query()
 	v.Add("type", "movie")
 	v.Add("t", titlename)
 
 	baseurl.RawQuery = v.Encode()
-	receivedBytes := commonfunc.SendAndReceiveRequest(baseurl)
+	receivedBytes := common.SendAndReceiveRequest(baseurl)
 	var result map[string]interface{}
 
 	jsonErr := json.Unmarshal(receivedBytes, &result)
-	commonfunc.Validate(jsonErr)
+	common.Validate(jsonErr)
 
-	var moviedb = commonfunc.ProcessSearchResult(result)
+	var moviedb = common.ProcessSearchResult(result)
 	c.JSON(http.StatusOK, moviedb)
 }
 
 func searchSeries(c *gin.Context) {
 	titlename := c.Param("title")
-	baseurl := commonfunc.GenerateBaseURL()
+	baseurl := common.GenerateBaseURL()
 	v := baseurl.Query()
 	v.Add("type", "series")
 	v.Add("t", titlename)
 
 	baseurl.RawQuery = v.Encode()
-	receivedBytes := commonfunc.SendAndReceiveRequest(baseurl)
+	receivedBytes := common.SendAndReceiveRequest(baseurl)
 	var result map[string]interface{}
 
 	jsonErr := json.Unmarshal(receivedBytes, &result)
-	commonfunc.Validate(jsonErr)
+	common.Validate(jsonErr)
 
-	var moviedb = commonfunc.ProcessSearchResult(result)
+	var moviedb = common.ProcessSearchResult(result)
 	c.JSON(http.StatusOK, moviedb)
 }
 
@@ -70,37 +70,37 @@ func search(c *gin.Context) {
 
 	titlename := c.Param("title")
 
-	baseurl := commonfunc.GenerateBaseURL()
+	baseurl := common.GenerateBaseURL()
 	v := baseurl.Query()
 	v.Add("t", titlename)
 
 	baseurl.RawQuery = v.Encode()
-	receivedBytes := commonfunc.SendAndReceiveRequest(baseurl)
+	receivedBytes := common.SendAndReceiveRequest(baseurl)
 	var result map[string]interface{}
 
 	jsonErr := json.Unmarshal(receivedBytes, &result)
-	commonfunc.Validate(jsonErr)
+	common.Validate(jsonErr)
 
-	var moviesearch = commonfunc.ProcessSearchResult(result)
+	var moviesearch = common.ProcessSearchResult(result)
 	c.JSON(http.StatusOK, moviesearch)
 }
 
 func list(c *gin.Context) {
 	searchitem := c.Param("searchitem")
 
-	baseurl := commonfunc.GenerateBaseURL()
+	baseurl := common.GenerateBaseURL()
 	v := baseurl.Query()
 
 	v.Add("s", searchitem)
 	baseurl.RawQuery = v.Encode()
 
-	receivedBytes := commonfunc.SendAndReceiveRequest(baseurl)
+	receivedBytes := common.SendAndReceiveRequest(baseurl)
 	var result map[string]interface{}
 
 	jsonErr := json.Unmarshal(receivedBytes, &result)
-	commonfunc.Validate(jsonErr)
+	common.Validate(jsonErr)
 
-	var movielist = commonfunc.ProcessListResults(result)
+	var movielist = common.ProcessListResults(result)
 	c.JSON(http.StatusOK, movielist)
 }
 

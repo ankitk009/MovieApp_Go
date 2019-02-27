@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"MovieApp_Go/commonfunc"
+	"MovieApp_Go/common"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -18,20 +18,20 @@ var searchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		titlename, _ := cmd.Flags().GetString("title")
 		searchtype, _ := cmd.Flags().GetString("type")
-		baseurl := commonfunc.GenerateBaseURL()
+		baseurl := common.GenerateBaseURL()
 		v := baseurl.Query()
 		v.Add("t", titlename)
 		v.Add("type", searchtype)
 		baseurl.RawQuery = v.Encode()
 
 		// fmt.Println(baseurl.String())
-		receivedBytes := commonfunc.SendAndReceiveRequest(baseurl)
+		receivedBytes := common.SendAndReceiveRequest(baseurl)
 		var result map[string]interface{}
 
 		jsonErr := json.Unmarshal(receivedBytes, &result)
-		commonfunc.Validate(jsonErr)
+		common.Validate(jsonErr)
 
-		var moviesearch = commonfunc.ProcessSearchResult(result)
+		var moviesearch = common.ProcessSearchResult(result)
 		//fmt.Println(moviesearch)
 
 		w := new(tabwriter.Writer)

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"MovieApp_Go/commonfunc"
+	"MovieApp_Go/common"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -18,20 +18,20 @@ var listCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		titlename, _ := cmd.Flags().GetString("title")
 		searchtype, _ := cmd.Flags().GetString("type")
-		baseurl := commonfunc.GenerateBaseURL()
+		baseurl := common.GenerateBaseURL()
 		v := baseurl.Query()
 
 		v.Add("s", titlename)
 		v.Add("type", searchtype)
 		baseurl.RawQuery = v.Encode()
 
-		receivedBytes := commonfunc.SendAndReceiveRequest(baseurl)
+		receivedBytes := common.SendAndReceiveRequest(baseurl)
 		var result map[string]interface{}
 
 		jsonErr := json.Unmarshal(receivedBytes, &result)
-		commonfunc.Validate(jsonErr)
+		common.Validate(jsonErr)
 
-		var movielist = commonfunc.ProcessListResults(result)
+		var movielist = common.ProcessListResults(result)
 		//fmt.Println(movielist)
 		w := new(tabwriter.Writer)
 		w.Init(os.Stdout, 8, 8, 0, '\t', 0)
