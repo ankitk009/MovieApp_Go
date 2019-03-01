@@ -69,7 +69,7 @@ func SendAndReceiveRequest(baseurl *url.URL) []byte {
 
 //GenerateBaseURL creates an API Base URL and returns the encoded URL
 func GenerateBaseURL() *url.URL {
-	apikey := "579571ec"
+	apikey := "APIKey"
 	//Creating base URL
 	baseurl, _ := url.Parse(apiEndpoint)
 	v := baseurl.Query()
